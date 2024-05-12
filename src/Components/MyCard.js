@@ -30,6 +30,16 @@ function MyCard() {
         setCurrentPage(newRange + 1);
     };
 
+    const handleDelete = (id) => {
+        axios.delete(`https://jsonplaceholder.typicode.com/photos/${id}`)
+            .then((response) => {
+                // 서버에서 삭제 후, 로컬 상태 업데이트
+                console.log('삭제 요청:', response);  // 응답 로깅
+                setImages(images.filter(image => image.id !== id));
+            })
+            .catch(error => console.error('Error deleting the image:', error));
+    };
+
     return (
         <>
             <Row xs={1} sm={2} md={3} lg={4} className="g-4">
@@ -40,8 +50,13 @@ function MyCard() {
                             <Card.Body>
                                 <Card.Title>{image.id}</Card.Title>
                                 <Card.Text>{image.title}</Card.Text>
-                                <Button variant="primary" onClick={() => navigate('/')}>
-                                    홈으로
+                                {/* 삭제 버튼으로 수정 */}
+                                <Button variant="danger" onClick={() => handleDelete(image.id)}>
+                                    삭제
+                                </Button>
+                                {/* 상세페이지 이동 버튼 추가 */}
+                                <Button variant="info" onClick={() => navigate(`/image/${image.id}`)}>
+                                    상세페이지 이동
                                 </Button>
                             </Card.Body>
                         </Card>

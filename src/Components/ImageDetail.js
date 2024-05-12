@@ -1,13 +1,3 @@
-웹스톰 (인텔리제이와 같은 ide에 전부 적용가능)에서 git 버전 관리시 .idea 폴더까지 업로드 되는 문제
-
-```jsx
-<Button variant="info" onClick={() => navigate(`/image/${image.id}`)}>
-상세페이지 이동
-</Button>
-```
-
-예시코드 참고용
-```jsx
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -36,5 +26,3 @@ function ImageDetail() {
 }
 
 export default ImageDetail;
-
-```
