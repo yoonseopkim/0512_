@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import {Link, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Homework from "./Pages/Homework";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./Components/Header";
