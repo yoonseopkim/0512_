@@ -38,3 +38,55 @@ function ImageDetail() {
 export default ImageDetail;
 
 ```
+
+나머지 post와 put 요청
+```jsx
+const handleAddImage = () => {
+    const newImage = {
+        albumId: 1,
+        title: 'new image',
+        url: 'https://via.placeholder.com/600/92c952',
+        thumbnailUrl: 'https://via.placeholder.com/150/92c952'
+    };
+    axios.post('https://jsonplaceholder.typicode.com/photos', newImage)
+        .then(response => {
+            console.log('추가된 이미지:', response.data);
+            setImages([...images, response.data]);  // 상태 업데이트
+        })
+        .catch(error => console.error('Error adding image:', error));
+};
+
+```
+
+```jsx
+const handleUpdateImage = (id) => {
+    const updatedImage = {
+        id: id,
+        albumId: 1,
+        title: 'updated image',
+        url: 'https://via.placeholder.com/600/92c952',
+        thumbnailUrl: 'https://via.placeholder.com/150/92c952'
+    };
+    axios.put(`https://jsonplaceholder.typicode.com/photos/${id}`, updatedImage)
+        .then(response => {
+            console.log('업데이트된 이미지:', response.data);
+            setImages(images.map(image => image.id === id ? response.data : image));  // 상태 업데이트
+        })
+        .catch(error => console.error('Error updating image:', error));
+};
+
+```
+
+```jsx
+<Row className="mb-3">
+    <Col>
+        <Button onClick={handleAddImage} variant="success">이미지 추가</Button>
+    </Col>
+    {currentImages.map(image => (
+        <Col key={image.id}>
+            <Button onClick={() => handleUpdateImage(image.id)} variant="warning">이미지 수정</Button>
+        </Col>
+    ))}
+</Row>
+
+```

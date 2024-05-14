@@ -40,6 +40,45 @@ function MyCard() {
             .catch(error => console.error('Error deleting the image:', error));
     };
 
+    // post,put 요청
+    const handleAddImage = () => {
+        const newImage = {
+            albumId: 1,
+            title: 'new image',
+            url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOmElXyiza80_wqmLFJWBDvllrzP6dvqzumQ&usqp=CAU',
+            thumbnailUrl: 'https://via.placeholder.com/150/92c952'
+        };
+        axios.post('https://jsonplaceholder.typicode.com/photos', newImage)
+            .then(response => {
+                console.log('POST 요청 응답:', response);
+                console.log('상태 코드:', response.status);
+                console.log('추가된 이미지:', response.data);
+                // 배열의 첫 번째 위치에 새 이미지 추가
+                setImages(prevImages => [response.data, ...prevImages]);  // 상태 업데이트
+            })
+            .catch(error => console.error('Error adding image:', error));
+    };
+
+    // put
+    const handleUpdateImage = (id) => {
+        const updatedImage = {
+            id: id,
+            albumId: 1,
+            title: 'updated image',
+            url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKpWNOBJroqvo4CQqJX07z3xXoYVpXtUliaQ&usqp=CAU',
+            thumbnailUrl: 'https://via.placeholder.com/150/92c952'
+        };
+        axios.put(`https://jsonplaceholder.typicode.com/photos/${id}`, updatedImage)
+            .then(response => {
+                console.log('PUT 요청 응답:', response);
+                console.log('상태 코드:', response.status);
+                console.log('업데이트된 이미지:', response.data);
+                setImages(images.map(image => image.id === id ? response.data : image));  // 상태 업데이트
+            })
+            .catch(error => console.error('Error updating image:', error));
+    };
+
+
     return (
         <>
             <Row xs={1} sm={2} md={3} lg={4} className="g-4">
@@ -58,6 +97,8 @@ function MyCard() {
                                 <Button variant="info" onClick={() => navigate(`/image/${image.id}`)}>
                                     상세페이지 이동
                                 </Button>
+                                <Button onClick={handleAddImage} variant="success">게시물 추가</Button>
+                                <Button onClick={() => handleUpdateImage(image.id)} variant="warning">이미지 수정</Button>
                             </Card.Body>
                         </Card>
                     </Col>
